@@ -10,21 +10,20 @@ import {
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import SelectDropdown from "react-native-select-dropdown";
-import { Audio } from 'expo-av';
+import { Audio } from "expo-av";
 
 const image = {
   uri: "https://docs.expo.dev/static/images/tutorial/splash.png",
 };
 const VillagerReminder = () => {
-  var vilProductTime = 20
-
-  const [timer, setTimer] = useState(vilProductTime);
+  const [timer, setTimer] = useState(20);
   const [start, setStart] = useState(false);
-  const [sound, setSound] = React.useState();
+  const [sound, setSound] = useState();
 
   var firstStart = useRef(true);
   var tick = useRef();
-
+  var vilProductTime = useRef(20);
+  //sound
   async function playSound() {
     console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(
@@ -36,7 +35,7 @@ const VillagerReminder = () => {
     await sound.playAsync();
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     return sound
       ? () => {
           console.log("Unloading Sound");
@@ -44,7 +43,7 @@ const VillagerReminder = () => {
         }
       : undefined;
   }, [sound]);
-
+  //timer
   useEffect(() => {
     if (firstStart.current) {
       firstStart.current = !firstStart.current;
@@ -63,16 +62,18 @@ const VillagerReminder = () => {
     setStart(!start);
     clearInterval(tick.current);
   };
-  const toggleRestart = (params) => {
-    setTimer(20);
+  const toggleRestart = (i) => {
+    setTimer(vilProductTime);
+    clearInterval(tick.current);
   };
   const dispSecondsAsMins = (seconds) => {
     console.log("seconds " + seconds);
     const mins = Math.floor(seconds / 60);
     const seconds_ = seconds % 60;
+    console.log(vilProductTime.current);
     if (seconds < 0) {
-      setTimer(20);
-      playSound()
+      setTimer(vilProductTime.current);
+      // playSound()
     }
     return (
       mins.toString() +
@@ -80,17 +81,42 @@ const VillagerReminder = () => {
       Math.floor(seconds_ == 0 ? "00" : seconds_.toString())
     );
   };
-  const civ = ["Others","Chinese Song", "French Dark Age", "French Feudal", "French Castle", "French Imperial"];
- 
+  const civ = [
+    "Others",
+    "Chinese Song",
+    "French Dark Age",
+    "French Feudal",
+    "French Castle",
+    "French Imperial",
+  ];
+
   const VilProductionTime = (i) => {
     console.log(i);
-    if (i === 0) return setTimer(10)
-    if (i === 1) return setTimer(18)
-    if (i === 2) return setTimer(17)
-    if (i === 3) return setTimer(16)
-    if (i === 4) return setTimer(15)
-    if (i === 5) return setTimer(14)
-  }
+    if (i === 0) {
+      setTimer(20);
+      return (vilProductTime.current = 20);
+    }
+    if (i === 1) {
+      setTimer(18);
+      return (vilProductTime.current = 18);
+    }
+    if (i === 2) {
+      setTimer(19);
+      return (vilProductTime.current = 19);
+    }
+    if (i === 3){
+      setTimer(18);
+      return (vilProductTime.current = 18);
+    }  
+    if (i === 4){
+      setTimer(17);
+      return (vilProductTime.current = 17);
+    } ;
+    if (i === 5){
+      setTimer(16);
+      return (vilProductTime.current = 16);
+    } ;
+  };
 
   return (
     <SafeAreaProvider>
@@ -100,7 +126,7 @@ const VillagerReminder = () => {
             data={civ}
             onSelect={(selectedItem, index) => {
               console.log(selectedItem, index);
-              VilProductionTime(index)
+              VilProductionTime(index);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               return selectedItem;
@@ -111,18 +137,18 @@ const VillagerReminder = () => {
           />
           <Text style={styles.text}>Villiger Reminder</Text>
           <AnimatedCircularProgress
-            style={styles.text}
+            style={styles}
             size={200}
             width={5}
             prefill={100}
-            fill={(timer / 20) * 100}
+            fill={(timer / vilProductTime.current) * 100}
             padding={10}
             tintColor="tomato"
             // onAnimationComplete={() => console.log("onAnimationComplete")}
             backgroundColor="#3d5875"
             rotation="0"
           >
-            {(fill) => <Text>{fill}</Text>}
+            {(fill) => <Text>{Math.floor(timer)}</Text>}
           </AnimatedCircularProgress>
           <Text style={styles.text}>{dispSecondsAsMins(timer)}</Text>
           <Button title="Play Sound" onPress={playSound} />
