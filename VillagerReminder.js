@@ -91,7 +91,6 @@ const VillagerReminder = () => {
   ];
 
   const VilProductionTime = (i) => {
-    console.log(i);
     if (i === 0) {
       setTimer(20);
       return (vilProductTime.current = 20);
@@ -104,40 +103,42 @@ const VillagerReminder = () => {
       setTimer(19);
       return (vilProductTime.current = 19);
     }
-    if (i === 3){
+    if (i === 3) {
       setTimer(18);
       return (vilProductTime.current = 18);
-    }  
-    if (i === 4){
+    }
+    if (i === 4) {
       setTimer(17);
       return (vilProductTime.current = 17);
-    } ;
-    if (i === 5){
+    }
+    if (i === 5) {
       setTimer(16);
       return (vilProductTime.current = 16);
-    } ;
+    }
   };
 
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
         <ImageBackground source={image} style={styles.image}>
-          <SelectDropdown
-            data={civ}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
-              VilProductionTime(index);
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
-          />
+          <View style={styles.timeCircle}>
+            <SelectDropdown
+              data={civ}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+                VilProductionTime(index);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+          </View>
           <Text style={styles.text}>Villiger Reminder</Text>
           <AnimatedCircularProgress
-            style={styles}
+            style={styles.timeCircle}
             size={200}
             width={5}
             prefill={100}
@@ -151,10 +152,20 @@ const VillagerReminder = () => {
             {(fill) => <Text>{Math.floor(timer)}</Text>}
           </AnimatedCircularProgress>
           <Text style={styles.text}>{dispSecondsAsMins(timer)}</Text>
-          <Button title="Play Sound" onPress={playSound} />
+          <View style={styles.buttonn}>
+            <Button title="Play Sound" onPress={playSound} />
+          </View>
 
-          <Button title={!start ? "START" : "STOP"} onPress={toggleStart} />
-          <Button title="Restart" onPress={toggleRestart} />
+          <View style={styles.buttonn}>
+            <Button title={!start ? "START" : "STOP"} onPress={toggleStart} />
+          </View>
+          <View style={styles.buttonn}>
+            <Button
+              style={styles.buttonn}
+              title="Restart"
+              onPress={toggleRestart}
+            />
+          </View>
         </ImageBackground>
       </View>
     </SafeAreaProvider>
@@ -163,14 +174,14 @@ const VillagerReminder = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignContent: "center",
+    // justifyContent: "center",
+    // alignContent: "center",
   },
   image: {
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
+    alignContent: "center",
   },
   text: {
     color: "white",
@@ -180,7 +191,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000a0",
   },
   circle: {
-    alignContent: "center",
+    // alignContent: "center",
+  },
+  buttonn: {
+    marginTop: 20,
+  },
+  timeCircle: {
+    alignSelf: "center",
   },
 });
 export default VillagerReminder;
