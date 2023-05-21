@@ -1,3 +1,4 @@
+
 {
   "build": {
     "preview": {
@@ -11,7 +12,7 @@
       }
     },
     "preview3": {
-      "develcyaopmentClient": true
+      "developmentClient": true
     },
     "production": {}
   }

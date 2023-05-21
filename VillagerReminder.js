@@ -63,7 +63,7 @@ const VillagerReminder = () => {
     clearInterval(tick.current);
   };
   const toggleRestart = (i) => {
-    setTimer(vilProductTime);
+    setTimer(vilProductTime.current);
     clearInterval(tick.current);
   };
   const dispSecondsAsMins = (seconds) => {
@@ -152,19 +152,20 @@ const VillagerReminder = () => {
             {(fill) => <Text>{Math.floor(timer)}</Text>}
           </AnimatedCircularProgress>
           <Text style={styles.text}>{dispSecondsAsMins(timer)}</Text>
-          <View style={styles.buttonn}>
-            <Button title="Play Sound" onPress={playSound} />
-          </View>
-
-          <View style={styles.buttonn}>
-            <Button title={!start ? "START" : "STOP"} onPress={toggleStart} />
-          </View>
-          <View style={styles.buttonn}>
-            <Button
-              style={styles.buttonn}
-              title="Restart"
-              onPress={toggleRestart}
-            />
+          <View style={styles.btnContainer}>
+            <View style={styles.buttonn}>
+              <Button title="Play Sound" onPress={playSound} />
+            </View>
+            <View style={styles.pauseBtn}>
+              <Button title={!start ? "Start" : "Pause"} onPress={toggleStart} />
+            </View>
+            <View style={styles.buttonn}>
+              <Button
+                style={styles.buttonn}
+                title="Restart"
+                onPress={toggleRestart}
+              />
+            </View>
           </View>
         </ImageBackground>
       </View>
@@ -194,10 +195,29 @@ const styles = StyleSheet.create({
     // alignContent: "center",
   },
   buttonn: {
-    marginTop: 20,
+    width: 120,
+    height: 120,
+    justifyContent: "center",
+    alignSelf: "center",
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: "orange",
   },
   timeCircle: {
     alignSelf: "center",
   },
+  pauseBtn: {
+    width: 100,
+    height: 20,
+    alignSelf: "center",
+    borderRadius: 100,
+    marginBottom:20,
+    marginLeft: 20,
+    marginRight: 20
+  },
+  btnContainer: {
+    flexDirection: "row",
+    justifyContent: "center"
+  }
 });
 export default VillagerReminder;
