@@ -11,6 +11,7 @@ import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import SelectDropdown from "react-native-select-dropdown";
 import { Audio } from "expo-av";
+// import LinearGradient from 'react-native-linear-gradient';
 
 const image = {
   uri: "https://docs.expo.dev/static/images/tutorial/splash.png",
@@ -30,7 +31,6 @@ const VillagerReminder = () => {
       require("./assets/blyat.mp4")
     );
     setSound(sound);
-
     console.log("Playing Sound");
     await sound.playAsync();
   }
@@ -43,6 +43,7 @@ const VillagerReminder = () => {
         }
       : undefined;
   }, [sound]);
+
   //timer
   useEffect(() => {
     if (firstStart.current) {
@@ -132,9 +133,9 @@ const VillagerReminder = () => {
                 return selectedItem;
               }}
               rowTextForSelection={(item, index) => {
-                return item;
-              }}
+                return item;              }}
             />
+
           </View>
           <Text style={styles.text}>Villiger Reminder</Text>
           <AnimatedCircularProgress
@@ -154,13 +155,20 @@ const VillagerReminder = () => {
           <Text style={styles.text}>{dispSecondsAsMins(timer)}</Text>
           <View style={styles.btnContainer}>
             <View style={styles.buttonn}>
-              <Button title="Play Sound" onPress={playSound} />
+              <Button
+                color="orange"
+                title="Play Sound" onPress={playSound} />
             </View>
             <View style={styles.pauseBtn}>
-              <Button title={!start ? "Start" : "Pause"} onPress={toggleStart} />
+              <Button
+                title={!start ? "Start" : "Pause"}
+                color="orange"
+                onPress={toggleStart}
+              />
             </View>
             <View style={styles.buttonn}>
               <Button
+                color="orange"
                 style={styles.buttonn}
                 title="Restart"
                 onPress={toggleRestart}
@@ -172,6 +180,7 @@ const VillagerReminder = () => {
     </SafeAreaProvider>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -211,13 +220,14 @@ const styles = StyleSheet.create({
     height: 20,
     alignSelf: "center",
     borderRadius: 100,
-    marginBottom:20,
+    marginBottom: 20,
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
+    backgroundColor: "#000000a0",
   },
   btnContainer: {
     flexDirection: "row",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 export default VillagerReminder;

@@ -6,7 +6,6 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    // <VillagerReminder/>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={VillagerReminder} />
