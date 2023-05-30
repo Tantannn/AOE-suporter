@@ -133,9 +133,9 @@ const VillagerReminder = () => {
                 return selectedItem;
               }}
               rowTextForSelection={(item, index) => {
-                return item;              }}
+                return item;
+              }}
             />
-
           </View>
           <Text style={styles.text}>Villiger Reminder</Text>
           <AnimatedCircularProgress
@@ -155,9 +155,7 @@ const VillagerReminder = () => {
           <Text style={styles.text}>{dispSecondsAsMins(timer)}</Text>
           <View style={styles.btnContainer}>
             <View style={styles.buttonn}>
-              <Button
-                color="orange"
-                title="Play Sound" onPress={playSound} />
+              <Button color="orange" title="Play Sound" onPress={playSound} />
             </View>
             <View style={styles.pauseBtn}>
               <Button
@@ -175,6 +173,12 @@ const VillagerReminder = () => {
               />
             </View>
           </View>
+          <Button
+            color="orange"
+            style={styles.buttonn}
+            title="Restart"
+            onPress={() => navigation.navigate("PlayerStat")}
+          />
         </ImageBackground>
       </View>
     </SafeAreaProvider>

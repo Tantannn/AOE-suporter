@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer initialRouteName="VillagerReminder">
       <Stack.Navigator>
         <Stack.Screen name="VillagerReminder" component={VillagerReminder} />
         <Stack.Screen name="PlayerStat" component={PlayerStat} />
