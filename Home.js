@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -6,46 +6,25 @@ import {
   View,
   Button,
   Circle,
-  SafeAreaView,
-  TextInput,
 } from "react-native";
-import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import SelectDropdown from "react-native-select-dropdown";
-import { Audio } from "expo-av";
-import axiosInstance from "./axios/axios";
-
-const PlayerStat = () => {
-  const [text, onChangeText] = React.useState("Useless Text");
-  const [number, onChangeNumber] = React.useState("");
-  useEffect(() => {
-    const Getdata = async () => {
-      try {
-        const res = await axiosInstance.get("v0/leaderboards/rm_solo");
-        console.log(res.data);
-      } catch (error) {}
-    };
-    Getdata();
-  }, []);
+const Home = ({ navigation }) => {
   return (
-    <SafeAreaView>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="Type the user's name"
-        keyboardType="numeric"
+    <View>
+      <Button
+        color="orange"
+        style={styles.buttonn}
+        title="Player Stat"
+        onPress={() => navigation.navigate("PlayerStat")}
       />
       <Button
         color="orange"
         style={styles.buttonn}
-        title="Search"
-        // onPress={() => ()}
+        title="Villager Reminder"
+        onPress={() => navigation.navigate("VillagerReminder")}
       />
-    </SafeAreaView>
+    </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -94,5 +73,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
   },
-});
-export default PlayerStat;
+})
+export default Home;

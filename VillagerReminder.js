@@ -16,7 +16,7 @@ import { Audio } from "expo-av";
 const image = {
   uri: "https://docs.expo.dev/static/images/tutorial/splash.png",
 };
-const VillagerReminder = () => {
+const VillagerReminder = ({navigation}) => {
   const [timer, setTimer] = useState(20);
   const [start, setStart] = useState(false);
   const [sound, setSound] = useState();
@@ -173,12 +173,7 @@ const VillagerReminder = () => {
               />
             </View>
           </View>
-          <Button
-            color="orange"
-            style={styles.buttonn}
-            title="Restart"
-            onPress={() => navigation.navigate("PlayerStat")}
-          />
+    
         </ImageBackground>
       </View>
     </SafeAreaProvider>
