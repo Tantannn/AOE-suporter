@@ -16,23 +16,34 @@ import { Audio } from "expo-av";
 import axiosInstance from "./axios/axios";
 
 const PlayerStat = () => {
-  const [text, onChangeText] = React.useState("Useless Text");
-  const [number, onChangeNumber] = React.useState("");
+  const [change, onChange] = React.useState("");
+  const [submit, onSubmit] = React.useState();
+  const [Data, setData] = useState()
   useEffect(() => {
     const Getdata = async () => {
       try {
         const res = await axiosInstance.get("v0/leaderboards/rm_solo");
-        console.log(res.data);
+        // console.log(res.data);
+        setData(res.data)
       } catch (error) {}
     };
     Getdata();
   }, []);
+  console.log(Data)
+  const handleSubmit = async () => { 
+    onSubmit(change)
+    try {
+      const res = await axiosInstance.get(`v0/players/search?query=${submit}`)
+    } catch (error) {
+      
+    }
+  }
   return (
     <SafeAreaView>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
+        onChangeText={onChange}
+        value={text}
         placeholder="Type the user's name"
         keyboardType="numeric"
       />
@@ -40,8 +51,20 @@ const PlayerStat = () => {
         color="orange"
         style={styles.buttonn}
         title="Search"
-        // onPress={() => ()}
+        onPress={handleSubmit()}
       />
+    {Data && (
+        <>
+        <Text>{Data.short_name}</Text>
+        {Data.players.slice(0,10).map((player,i) => (
+          <React.Fragment key={i}>
+            <Text>{i+1}</Text>
+            <Text>{player.name}</Text>
+            <Text>{player.rating}</Text>
+            <Text>{player.games_count}</Text>
+            <Text>{player.win_rate}%</Text>
+          </React.Fragment>))}  
+      </>)}
     </SafeAreaView>
   );
 };
