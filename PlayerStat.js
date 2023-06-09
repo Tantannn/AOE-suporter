@@ -1,70 +1,78 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import {
-  ImageBackground,
   StyleSheet,
   Text,
-  View,
   Button,
-  Circle,
   SafeAreaView,
   TextInput,
 } from "react-native";
-import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import SelectDropdown from "react-native-select-dropdown";
-import { Audio } from "expo-av";
+
 import axiosInstance from "./axios/axios";
+import { DataTable } from 'react-native-paper';
 
 const PlayerStat = () => {
   const [change, onChange] = React.useState("");
   const [submit, onSubmit] = React.useState();
-  const [Data, setData] = useState()
+  const [data, setData] = useState()
   useEffect(() => {
     const Getdata = async () => {
       try {
         const res = await axiosInstance.get("v0/leaderboards/rm_solo");
-        // console.log(res.data);
+        console.log(res.data);
         setData(res.data)
       } catch (error) {}
     };
     Getdata();
   }, []);
-  console.log(Data)
+  console.log(data)
   const handleSubmit = async () => { 
     onSubmit(change)
     try {
       const res = await axiosInstance.get(`v0/players/search?query=${submit}`)
+      setData(res)
     } catch (error) {
-      
+      console.log(error)
     }
   }
+  console.log(change)
   return (
     <SafeAreaView>
       <TextInput
         style={styles.input}
-        onChangeText={onChange}
-        value={text}
+        onChangeText={e=> onChange(e)}
+        // value={text}
         placeholder="Type the user's name"
         keyboardType="numeric"
       />
       <Button
-        color="orange"
+        color="orange" 
         style={styles.buttonn}
         title="Search"
-        onPress={handleSubmit()}
+        // onPress={handleSubmit()} 
       />
-    {Data && (
+      {data && (
         <>
-        <Text>{Data.short_name}</Text>
-        {Data.players.slice(0,10).map((player,i) => (
-          <React.Fragment key={i}>
-            <Text>{i+1}</Text>
-            <Text>{player.name}</Text>
-            <Text>{player.rating}</Text>
-            <Text>{player.games_count}</Text>
-            <Text>{player.win_rate}%</Text>
-          </React.Fragment>))}  
-      </>)}
+          <Text>{data.short_name}</Text>
+          <DataTable style={styles.container}>
+            <DataTable.Header style={styles.tableHeader}>
+              <DataTable.Title>No.</DataTable.Title>
+              <DataTable.Title>Name</DataTable.Title>
+              <DataTable.Title>Rating</DataTable.Title>
+              <DataTable.Title>Games</DataTable.Title>
+              <DataTable.Title>Win Rates</DataTable.Title>
+            </DataTable.Header>
+
+            {data.players.slice(0,10).map((player,i) => (
+              <DataTable.Row key={i}>
+                <DataTable.Cell>{i+1}</DataTable.Cell>
+                <DataTable.Cell>{player.name}</DataTable.Cell>
+                <DataTable.Cell>{player.rating}</DataTable.Cell>
+                <DataTable.Cell>{player.games_count}</DataTable.Cell>
+                <DataTable.Cell>{player.win_rate}%</DataTable.Cell>
+              </DataTable.Row>
+            ))}
+          </DataTable>
+        </>)}
     </SafeAreaView>
   );
 };

@@ -1,11 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import VillagerReminder from "./VillagerReminder";
-import PlayerStat from "./PlayerStat";
-import Home from "./Home";
+import PlayerStat  from "./PlayerStat";
+import Home  from "./Home";
 // import 'expo-dev-client';
 const Stack = createNativeStackNavigator();
-
 const App = () => {
   return (
     <NavigationContainer initialRouteName="VillagerReminder">
@@ -17,5 +16,4 @@ const App = () => {
     </NavigationContainer>
   );
 };
-
 export default App;
