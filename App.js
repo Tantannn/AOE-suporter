@@ -1,8 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import VillagerReminder from "./VillagerReminder";
-import PlayerStat  from "./PlayerStat";
+import PlayersStat  from "./PlayersStat";
 import Home  from "./Home";
+import PlayerDetails from "./PlayerDetails";
 // import 'expo-dev-client';
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -11,7 +12,8 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="VillagerReminder" component={VillagerReminder} />
-        <Stack.Screen name="PlayerStat" component={PlayerStat} />
+        <Stack.Screen name="PlayersStat" component={PlayersStat} />
+        <Stack.Screen name="PlayerDetails" component={PlayerDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

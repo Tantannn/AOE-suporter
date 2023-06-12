@@ -5,7 +5,6 @@ import {
   Text,
   View,
   Button,
-  Circle,
 } from "react-native";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { SafeAreaProvider } from "react-native-safe-area-context";

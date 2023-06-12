@@ -1,11 +1,8 @@
 import React from "react";
 import {
-  ImageBackground,
   StyleSheet,
-  Text,
   View,
   Button,
-  Circle,
 } from "react-native";
 const Home = ({ navigation }) => {
   return (
@@ -14,7 +11,7 @@ const Home = ({ navigation }) => {
         color="orange"
         style={styles.buttonn}
         title="Player Stat"
-        onPress={() => navigation.navigate("PlayerStat")}
+        onPress={() => navigation.navigate("PlayersStat")}
       />
       <Button
         color="orange"

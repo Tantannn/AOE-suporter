@@ -10,31 +10,26 @@ import {
 import axiosInstance from "./axios/axios";
 import { DataTable } from 'react-native-paper';
 
-const PlayerStat = () => {
+const PlayersStat = ({navigation}) => {
   const [change, onChange] = React.useState("");
   const [submit, onSubmit] = React.useState();
   const [data, setData] = useState()
+  const [search, setSearch] = useState()
   useEffect(() => {
     const Getdata = async () => {
       try {
         const res = await axiosInstance.get("v0/leaderboards/rm_solo");
-        console.log(res.data);
         setData(res.data)
       } catch (error) {}
     };
     Getdata();
   }, []);
   console.log(data)
-  const handleSubmit = async () => { 
+  const handleSubmit =  () => { 
     onSubmit(change)
-    try {
-      const res = await axiosInstance.get(`v0/players/search?query=${submit}`)
-      setData(res)
-    } catch (error) {
-      console.log(error)
-    }
+    navigation.navigate('PlayerDetails', submit);
   }
-  console.log(change)
+  console.log(data)
   return (
     <SafeAreaView>
       <TextInput
@@ -48,7 +43,7 @@ const PlayerStat = () => {
         color="orange" 
         style={styles.buttonn}
         title="Search"
-        // onPress={handleSubmit()} 
+        onPress={()=>handleSubmit()} 
       />
       {data && (
         <>
@@ -126,4 +121,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-export default PlayerStat;
+export default PlayersStat;
