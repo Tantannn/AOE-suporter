@@ -12,7 +12,6 @@ import { DataTable } from 'react-native-paper';
 
 const PlayersStat = ({navigation}) => {
   const [change, onChange] = React.useState("");
-  const [submit, onSubmit] = React.useState();
   const [data, setData] = useState()
   useEffect(() => {
     const Getdata = async () => {
@@ -25,10 +24,10 @@ const PlayersStat = ({navigation}) => {
   }, []);
   console.log(data)
   const handleSubmit =  () => { 
-    onSubmit(change)
-    navigation.navigate('PlayerDetails', submit);
+    if(!change) return 
+    navigation.navigate('PlayerDetails',{props: change});
   }
-  console.log(data)
+
   return (
     <SafeAreaView>
       <TextInput
