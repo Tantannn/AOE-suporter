@@ -14,7 +14,6 @@ const PlayersStat = ({navigation}) => {
   const [change, onChange] = React.useState("");
   const [submit, onSubmit] = React.useState();
   const [data, setData] = useState()
-  const [search, setSearch] = useState()
   useEffect(() => {
     const Getdata = async () => {
       try {
